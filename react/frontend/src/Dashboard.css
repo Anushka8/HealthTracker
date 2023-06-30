@@ -2,29 +2,29 @@
 .background-radial-gradient {
     background-color: hsl(218, 41%, 15%);
     background-image: radial-gradient(650px circle at 0% 0%,
-        hsl(218, 41%, 35%) 15%,
-        hsl(218, 41%, 30%) 35%,
-        hsl(218, 41%, 20%) 75%,
-        hsl(218, 41%, 19%) 80%,
-        transparent 100%),
-      radial-gradient(1250px circle at 100% 100%,
-        hsl(218, 41%, 45%) 15%,
-        hsl(218, 41%, 30%) 35%,
-        hsl(218, 41%, 20%) 75%,
-        hsl(218, 41%, 19%) 80%,
-        transparent 100%);
-  }
+    hsl(218, 41%, 35%) 15%,
+    hsl(218, 41%, 30%) 35%,
+    hsl(218, 41%, 20%) 75%,
+    hsl(218, 41%, 19%) 80%,
+    transparent 100%),
+    radial-gradient(1250px circle at 100% 100%,
+            hsl(218, 41%, 45%) 15%,
+            hsl(218, 41%, 30%) 35%,
+            hsl(218, 41%, 20%) 75%,
+            hsl(218, 41%, 19%) 80%,
+            transparent 100%);
+}
 
-  #radius-shape-1 {
+#radius-shape-1 {
     height: 220px;
     width: 220px;
     top: -60px;
     left: -130px;
     background: radial-gradient(#44006b, #ad1fff);
     overflow: hidden;
-  }
+}
 
-  #radius-shape-2 {
+#radius-shape-2 {
     border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
     bottom: -60px;
     right: -110px;
@@ -32,16 +32,60 @@
     height: 300px;
     background: radial-gradient(#44006b, #ad1fff);
     overflow: hidden;
-  }
+}
 
-  .bg-glass {
+.bg-glass {
     background-color: hsla(0, 0%, 100%, 0.9) !important;
     backdrop-filter: saturate(200%) blur(25px);
-  }
+}
 
-  form-class{
-   width: 100%;
-   height: 100%;
-   overflow: hidden;
-   margin: 0;
-  }
+form-class {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+}
+
+.item-list-container {
+    width: 350px; /* Adjust the width as needed */
+    height: 300px; /* Adjust the height as needed */
+    border: 1px solid #ccc;
+    overflow: auto;
+}
+
+.item-table th,
+.item-table td {
+  padding: 10px; /* Increase the padding for spacing */
+}
+.item-table tr {
+  border-bottom: 1px solid #ccc; /* Add a bottom border to create the line */
+}
+
+tr.active {
+  background-color: lightblue;
+  /* Add any other styling for the active row */
+}
+
+/* CSS for the popup box */
+.popup-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  max-width: 90%;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+}
+
+/* CSS for the close button */
+.popup-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
