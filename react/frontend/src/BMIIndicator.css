@@ -1,0 +1,29 @@
+.bmi-indicator {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.bmi-bar {
+  width: 200px;
+  height: 20px;
+  border-radius: 5px;
+  background: linear-gradient(to left, #e74c3c, #f1c40f, #2ecc71);
+  margin-right: 10px;
+}
+
+.bmi-label {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.bmi-range {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.bmi-range span {
+  flex: 1;
+  text-align: center;
+}

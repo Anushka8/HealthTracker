@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import './Dashboard.css';
 import axios from "axios";
 import HeartRateGraph from './HeartRateGraph';
-
+import BMIIndicator from "./BMIIndicator";
 const Dashboard = () => {
     const [authenticated, setauthenticated] = useState(null);
     const [data, setData] = useState([]);
@@ -37,6 +37,17 @@ const Dashboard = () => {
         return () => clearInterval(timer);
     }, []);
 
+    function calculateBMI(weight, height) {
+        // Convert height from centimeters to meters
+        const heightInMeters = height / 100;
+
+        // Calculate BMI using the formula
+        const bmi = weight / (heightInMeters * heightInMeters);
+
+        // Return the calculated BMI
+        return bmi.toFixed(2); // Round the BMI to 2 decimal places
+    }
+
     const fetchData = () => {
         // Make an API call to the Flask backend
         axios.get('http://localhost:5000/data', {
@@ -57,10 +68,6 @@ const Dashboard = () => {
     if (isLoading) {
         return <div>Loading...</div>; // Render a loading indicator while data is being fetched
     }
-    // if (!authenticated) {
-    // // Redirect
-    //     return <Navigate replace to='/login' />
-    // } else {
     return (
         <form className='form-class'>
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -90,7 +97,7 @@ const Dashboard = () => {
                 <div class="col">
                     <div class="card">
                         {/* graphs will go here instead of image */}
-                        <div className="item-list-container">
+                        <div className="item-list-container table-container">
                             {data.activity.length > 0 ? (
                                 <table className="item-table">
                                     <thead>
@@ -120,7 +127,8 @@ const Dashboard = () => {
                             )}
                             {selectedItem && (
                                 <div className="popup-box">
-                                    <span className="popup-close" onClick={() => handleCross()}>
+                                    <span className="popup-close"
+                                          onClick={() => handleCross()}>
         &times;
       </span>
                                     {/* Content of the pop-up box */}
@@ -136,25 +144,19 @@ const Dashboard = () => {
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">Activity</h5>
-                            <p class="card-text">This is a longer
-                                card with
-                                supporting text below as a natural
-                                lead-in to
-                                additional content.</p>
                         </div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="card">
-                        <div style={{width: '350px', height: '300px'}}
+                        <div style={{
+                            'height': '300px'
+                        }}
                              class="card-img-top" alt="...">
                             {data && <HeartRateGraph data={data}/>}
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">Heart Rate</h5>
-                            <p class="card-text">This is a longer card with
-                                supporting text below as a natural lead-in to
-                                additional content.</p>
                         </div>
                     </div>
                 </div>
@@ -168,25 +170,30 @@ const Dashboard = () => {
                             }} class="card-img-top" alt="..."/>
                         <div class="card-body">
                             <h5 class="card-title">Sleep Chart</h5>
-                            <p class="card-text">This is a longer card with
-                                supporting text below as a natural lead-in to
-                                additional content.</p>
                         </div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="card">
-                        <img
-                            src="https://cdn.statcdn.com/Statistic/1310000/1314613-blank-754.png"
+                        <div
                             style={{
                                 'width': '350px',
                                 'height': '300px'
-                            }} class="card-img-top" alt="..."/>
+                            }} class="card-img-top">
+                            <div
+                                className="content">{data.weight[0].weight} kgs
+                            </div>
+                            <div className="weight_date">Last measured
+                                on: {data.weight[0].timestamp}</div>
+
+                            <div
+                                className="bmi">BMI: {calculateBMI(data.weight[0].weight, data.user.height)}
+                                <BMIIndicator bmi={calculateBMI(data.weight[0].weight, data.user.height)}/>
+                            </div>
+                        </div>
+
                         <div class="card-body">
                             <h5 class="card-title">Weight</h5>
-                            <p class="card-text">This is a longer card with
-                                supporting text below as a natural lead-in to
-                                additional content.</p>
                         </div>
                     </div>
                 </div>
