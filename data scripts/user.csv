@@ -1,0 +1,21 @@
+name,username,email,dob,gender,height,weight,password
+John Doe,johndoe,johndoe@example.com,1990-05-15,Male,180,75,password1
+Jane Smith,janesmith,janesmith@example.com,1988-09-22,Female,165,60,password2
+Michael Johnson,michaeljohnson,michaeljohnson@example.com,1995-02-10,Male,175,70,password3
+Emily Davis,emilydavis,emilydavis@example.com,1992-07-05,Female,160,55,password4
+Robert Wilson,robertwilson,robertwilson@example.com,1987-12-18,Male,185,80,password5
+Sophia Brown,sophiabrown,sophiabrown@example.com,1994-03-28,Female,170,65,password6
+William Taylor,williamtaylor,williamtaylor@example.com,1991-06-12,Male,178,73,password7
+Olivia Miller,oliviamiller,oliviamiller@example.com,1989-10-29,Female,155,50,password8
+David Anderson,davidanderson,davidanderson@example.com,1996-01-07,Male,183,77,password9
+Emma Thomas,emmathomas,emmathomas@example.com,1993-04-19,Female,168,62,password10
+Christopher Martinez,christophermartinez,christophermartinez@example.com,1997-08-03,Male,172,68,password11
+Ava Hernandez,avahernandez,avahernandez@example.com,1990-11-26,Female,163,57,password12
+Daniel Clark,danielclark,danielclark@example.com,1988-03-10,Male,190,85,password13
+Mia Walker,miawalker,miawalker@example.com,1995-06-22,Female,175,70,password14
+Joseph Young,josephyoung,josephyoung@example.com,1992-09-05,Male,180,75,password15
+Charlotte King,charlotteking,charlotteking@example.com,1987-12-18,Female,165,60,password16
+James Rodriguez,jamesrodriguez,jamesrodriguez@example.com,1994-03-03,Male,170,65,password17
+Sophie Turner,sophieturner,sophieturner@example.com,1991-05-17,Female,158,52,password18
+Benjamin Bailey,benjaminbailey,benjaminbailey@example.com,1996-08-10,Male,185,80,password19
+Lily Wright,lilywright,lilywright@example.com,1993-11-23,Female,172,68,password20
