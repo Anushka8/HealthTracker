@@ -100,6 +100,8 @@ const Login = () => {
                                             className="btn btn-primary btn-block mb-4">
                                         Login
                                     </button>
+                                    <br></br>
+                                    <a href='./register'>New user? Register here</a>
                                     {/* </form> */}
                                 </div>
                             </div>

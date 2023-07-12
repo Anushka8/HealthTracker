@@ -29,7 +29,6 @@ def login():
         data = request.get_json()
         username = data.get('email')
         password = data.get('password')
-
         # Retrieve user data from Cassandra
         # Retrieve the hashed password from Cassandra
         result = cassandra_session.execute("""
@@ -79,23 +78,24 @@ def dashboard():
 
     # Retrieve activity data
     activity_rows = cassandra_session.execute("SELECT * FROM activity WHERE "
-                                              "user_id = %s",
+                                              "user_id = %s ALLOW FILTERING",
                                               [cassandra_uuid]).all()
 
     # Retrieve heart rate data
     heart_rate_rows = cassandra_session.execute(
         "SELECT * FROM heart_rate WHERE "
-        "user_id = %s", [cassandra_uuid]).all()
+        "user_id = %s ALLOW FILTERING", [cassandra_uuid]).all()
 
     # Retrieve sleep data
     sleep_rows = cassandra_session.execute("SELECT * FROM sleep WHERE "
-                                           "user_id = %s",
+                                           "user_id = %s ALLOW FILTERING",
                                            [cassandra_uuid]).all()
 
     # Retrieve weight data
     weight_rows = cassandra_session.execute("SELECT * FROM weight WHERE "
-                                            "user_id = %s",
+                                            "user_id = %s ALLOW FILTERING",
                                             [cassandra_uuid]).all()
+    print('WEIGHT!!!!!',weight_rows)
 
     activity_rows = [row._replace(activity_id=str(row.activity_id)) for row in
                      activity_rows]
