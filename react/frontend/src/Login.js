@@ -1,117 +1,152 @@
-import React, {useState} from 'react';
-import './Login.css';
-import {useNavigate} from "react-router-dom";
-import axios from 'axios';
+import React, { useState } from "react";
+import "./Login.css";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
-    const navigate = useNavigate();
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [authenticated, setauthenticated] = useState(localStorage.getItem(localStorage.getItem("authenticated") || false));
-    const handleUsernameChange = (event) => {
-        setUsername(event.target.value);
+  const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [authenticated, setauthenticated] = useState(
+    localStorage.getItem(localStorage.getItem("authenticated") || false)
+  );
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = {
+      email: username,
+      password: password,
     };
 
-    const handlePasswordChange = (event) => {
-        setPassword(event.target.value);
-    };
+    axios
+      .post("http://localhost:5000/login", data, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        setauthenticated(true);
+        localStorage.setItem("authenticated", true);
+        navigate("/dashboard");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = {
-            email: username,
-            password: password
-        };
-
-        axios.post('http://localhost:5000/login', data, {
-            withCredentials: true
-        })
-            .then((response) => {
-                setauthenticated(true)
-                localStorage.setItem("authenticated", true);
-                navigate('/dashboard')
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    };
-
-    return (
-        <form onSubmit={handleSubmit}>
-            <section className="background-radial-gradient overflow-hidden">
-                <div
-                    className="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
-                    <div className="row gx-lg-5 align-items-center mb-5">
-                        <div className="col-lg-6 mb-5 mb-lg-0"
-                             style={{'zIndex': '10'}}>
-                            <h1 className="my-5 display-5 fw-bold ls-tight"
-                                style={{'color': 'hsl(218, 81%, 95%)'}}>
-                                Health <br/>
-                                <span
-                                    style={{'color': 'hsl(218, 81%, 75%)'}}>Tracker</span>
-                            </h1>
-                            <p className="mb-4 opacity-70"
-                               style={{'color': 'hsl(218, 81%, 85%)'}}>
-                                Lorem ipsum dolor, sit amet consectetur
-                                adipisicing elit.
-                                Temporibus, expedita iusto veniam atque, magni
-                                tempora mollitia
-                                dolorum consequatur nulla, neque debitis eos
-                                reprehenderit quasi
-                                ab ipsum nisi dolorem modi. Quos?
-                            </p>
-                        </div>
-
-                        <div
-                            className="col-lg-6 mb-5 mb-lg-0 position-relative">
-                            <div id="radius-shape-1"
-                                 className="position-absolute rounded-circle shadow-5-strong"></div>
-                            <div id="radius-shape-2"
-                                 className="position-absolute shadow-5-strong"></div>
-
-                            <div className="card bg-glass">
-                                <div className="card-body px-4 py-5 px-md-5">
-                                    {/* <form> */}
-                                    {/* <!-- Email input --> */}
-                                    <div className="form-outline mb-4">
-                                        <input type="text" id="form3Example3"
-                                               className="form-control"
-                                               value={username}
-                                               onChange={handleUsernameChange}/>
-                                        <label htmlFor='username'
-                                               className="form-label"
-                                               for="form3Example3">Username</label>
-                                    </div>
-
-                                    {/* <!-- Password input --> */}
-                                    <div className="form-outline mb-4">
-                                        <input type="password"
-                                               id="form3Example4"
-                                               className="form-control"
-                                               value={password}
-                                               onChange={handlePasswordChange}/>
-                                        <label htmlFor='password'
-                                               className="form-label"
-                                               for="form3Example4">Password</label>
-                                    </div>
-
-                                    {/* <!-- Submit button --> */}
-                                    <button type="submit"
-                                            className="btn btn-primary btn-block mb-4">
-                                        Login
-                                    </button>
-                                    <br></br>
-                                    <a href='./register'>New user? Register here</a>
-                                    {/* </form> */}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+  return (
+    <form onSubmit={handleSubmit}>
+      <section className="vh-100">
+        <div className="container-fluid h-custom">
+          <div className="row d-flex justify-content-center align-items-center h-100">
+            <div className="col-md-9 col-lg-6 col-xl-5">
+              <img
+                src="https://img.freepik.com/free-vector/sport-fitness-tracker-abstract-concept-vector-illustration-activity-band-health-monitor-wrist-worn-device-application-running-cycling-every-day-training-abstract-metaphor_335657-4008.jpg"
+                className="img-fluid"
+                alt="Sample image"
+              />
+            </div>
+            <div className="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+              <div>
+                <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
+                  Login
+                </p>
+                {/* <!-- Email input --> */}
+                <div className="form-outline mb-4">
+                  <input
+                    type="text"
+                    id="form3Example3"
+                    className="form-control form-control-lg"
+                    placeholder="Enter a valid username"
+                    value={username}
+                    onChange={handleUsernameChange}
+                  />
+                  <label className="form-label" htmlFor="form3Example3">
+                    Username
+                  </label>
                 </div>
-            </section>
-        </form>
 
-    );
+                {/* <!-- Password input --> */}
+                <div className="form-outline mb-3">
+                  <input
+                    type="password"
+                    id="form3Example4"
+                    className="form-control form-control-lg"
+                    placeholder="Enter password"
+                    value={password}
+                    onChange={handlePasswordChange}
+                  />
+                  <label className="form-label" htmlFor="form3Example4">
+                    Password
+                  </label>
+                </div>
+
+                <div className="d-flex justify-content-between align-items-center">
+                  {/* <!-- Checkbox --> */}
+                  <div className="form-check mb-0">
+                    <input
+                      className="form-check-input me-2"
+                      type="checkbox"
+                      value=""
+                      id="form2Example3"
+                    />
+                    <label className="form-check-label" htmlFor="form2Example3">
+                      Remember me
+                    </label>
+                  </div>
+                  <a href="#!" className="text-body">
+                    Forgot password?
+                  </a>
+                </div>
+
+                <div className="text-center text-lg-start mt-4 pt-2">
+                  <button
+                    type="submit"
+                    className="btn btn-primary btn-lg"
+                    style={{
+                      paddingLeft: "2.5rem",
+                      paddingRight: "2.5rem",
+                    }}
+                  >
+                    Login
+                  </button>
+                  <p className="small fw-bold mt-2 pt-1 mb-0">
+                    Don't have an account?{" "}
+                    <a href=".\register" className="form-check-label">
+                      Register
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
+          {/* <!-- Right --> */}
+          <div>
+            <a href="#!" className="text-white me-4">
+              <i className="fab fa-facebook-f"></i>
+            </a>
+            <a href="#!" className="text-white me-4">
+              <i className="fab fa-twitter"></i>
+            </a>
+            <a href="#!" className="text-white me-4">
+              <i className="fab fa-google"></i>
+            </a>
+            <a href="#!" className="text-white">
+              <i className="fab fa-linkedin-in"></i>
+            </a>
+          </div>
+          {/* <!-- Right --> */}
+        </div>
+      </section>
+    </form>
+  );
 };
 
 export default Login;
