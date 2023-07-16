@@ -1,4 +1,3 @@
-import json
 import os
 import uuid
 
@@ -7,8 +6,7 @@ from cassandra.cluster import Cluster
 from passlib.hash import bcrypt
 from flask_cors import CORS, cross_origin
 from flask_session import Session
-from cassandra.query import SimpleStatement, named_tuple_factory
-
+from datetime import datetime
 app = Flask(__name__)
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SESSION_COOKIE_SECURE'] = False
@@ -61,6 +59,42 @@ def login():
         return jsonify(response)
 
 
+@app.route('/register', methods=['POST'])
+@cross_origin(supports_credentials=True)
+def register():
+    current_datetime = datetime.now()
+    formatted_timestamp = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
+    data = request.get_json()
+    name = data.get('name')
+    username = data.get('username')
+    email = data.get('email')
+    password = data.get('password')
+    dob = data.get('dob')
+    weight = data.get('weight')
+    height = data.get('height')
+    gender = data.get('gender')
+
+    print(name, username, email, dob, gender, height, weight,password)
+    cassandra_session.execute("""
+            INSERT INTO user (user_id, name, username, email, dob,
+                    gender, height, weight, password_hash) VALUES (uuid(),
+                    '{}','{}','{}','{}','{}',{},{},'{}');
+        """.format(name, username, email, dob, gender, height, weight,
+                   bcrypt.hash(password)))
+    result = cassandra_session.execute(
+        "SELECT user_id FROM user WHERE username = %s ALLOW "
+        "FILTERING",
+        (username,)).one()
+    uuid = result.user_id
+
+    cassandra_session.execute("INSERT INTO weight (user_id,weight_id,timestamp,weight)"
+             "VALUES ({},now(),'{}',{});"
+             .format(uuid,
+                     formatted_timestamp, weight))
+    response = {'message': 'Registration Successful'}
+    return jsonify(response)
+
+
 @app.route('/data')
 @cross_origin(supports_credentials=True)
 def dashboard():
@@ -95,7 +129,6 @@ def dashboard():
     weight_rows = cassandra_session.execute("SELECT * FROM weight WHERE "
                                             "user_id = %s ALLOW FILTERING",
                                             [cassandra_uuid]).all()
-    print('WEIGHT!!!!!',weight_rows)
 
     activity_rows = [row._replace(activity_id=str(row.activity_id)) for row in
                      activity_rows]

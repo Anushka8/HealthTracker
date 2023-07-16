@@ -2,7 +2,6 @@ import React from 'react';
 import './BMIIndicator.css';
 
 const BMIIndicator = ({ bmi }) => {
-    console.log(bmi);
   const getBmiCategory = () => {
     if (bmi < 18.5) {
       return 'Underweight';

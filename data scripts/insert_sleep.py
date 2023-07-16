@@ -3,9 +3,9 @@ import pandas as pd
 import uuid
 
 data = pd.read_csv('sleep.csv')
-cluster = Cluster(['localhost'])
-session = cluster.connect()
-session.set_keyspace('health_tracker')
+cluster = Cluster()  # create a cluster object
+session = cluster.connect(keyspace='health_tracker')
+session.execute("TRUNCATE sleep;")
 for index, row in data.iterrows():
     query = ("INSERT INTO sleep (user_id,sleep_id,start_time,end_time,duration)"
              "VALUES ({},now(),'{}','{}',{});"
